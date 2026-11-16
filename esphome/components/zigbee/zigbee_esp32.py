@@ -421,8 +421,9 @@ async def esp32_to_code(config: ConfigType) -> "MockObj":
     await cg.register_component(var, config)
     if config.get(CONF_SLEEPY):
         cg.add(var.set_sleepy(True))
-    if config.get(CONF_TCLK_EXCHANGE_REQUIRED) is False:
-        cg.add(var.set_tclk_exchange_required(False))
+    cg.add_optional(
+        var.set_tclk_exchange_required, config.get(CONF_TCLK_EXCHANGE_REQUIRED)
+    )
     if (keep_alive := config.get(CONF_POLLING_INTERVAL, 3000)) != 3000:
         cg.add(var.set_keep_alive(keep_alive))
     cg.add(
