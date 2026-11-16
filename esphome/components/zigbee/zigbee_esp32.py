@@ -50,6 +50,7 @@ from .const import (
     CONF_REPORT,
     CONF_ROUTER,
     CONF_SLEEPY,
+    CONF_TCLK_EXCHANGE_REQUIRED,
     CONF_USE_DEVICE_TYPE,
     KEY_ZIGBEE,
     KEY_ZIGBEE_AREA_STR,
@@ -420,6 +421,8 @@ async def esp32_to_code(config: ConfigType) -> "MockObj":
     await cg.register_component(var, config)
     if config.get(CONF_SLEEPY):
         cg.add(var.set_sleepy(True))
+    if config.get(CONF_TCLK_EXCHANGE_REQUIRED) is False:
+        cg.add(var.set_tclk_exchange_required(False))
     if (keep_alive := config.get(CONF_POLLING_INTERVAL, 3000)) != 3000:
         cg.add(var.set_keep_alive(keep_alive))
     cg.add(

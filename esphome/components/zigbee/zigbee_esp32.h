@@ -10,6 +10,7 @@
 
 #include "esp_zigbee.h"
 #include "ezbee/zha.h"
+#include "ezbee/secur.h"
 #include "esphome/core/automation.h"
 #include "esphome/core/component.h"
 #include "esphome/core/lock_free_queue.h"
@@ -41,6 +42,7 @@ class ZigbeeComponent final : public Component {
 
   void set_sleepy(bool sleepy) { this->sleepy_ = sleepy; }
   void set_keep_alive(uint32_t keep_alive) { this->keep_alive_ = keep_alive; }
+  void set_tclk_exchange_required(bool required) { this->tclk_exchange_required_ = required; }
   void set_basic_cluster(const char *model, const char *manufacturer, const char *location, const char *sw_build_id,
                          uint8_t power_source, uint8_t app_version);
   void add_cluster(uint8_t endpoint_id, uint16_t cluster_id, uint8_t role);
@@ -74,6 +76,7 @@ class ZigbeeComponent final : public Component {
 
  protected:
   bool sleepy_{false};
+  bool tclk_exchange_required_{true};
   uint32_t keep_alive_{3000};
   struct {
     uint8_t *model;

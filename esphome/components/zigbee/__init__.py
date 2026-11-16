@@ -42,6 +42,7 @@ from .const import (  # noqa: F401
     CONF_REPORT,
     CONF_ROUTER,
     CONF_SLEEPY,
+    CONF_TCLK_EXCHANGE_REQUIRED,
     CONF_USE_DEVICE_TYPE,
     CONF_WIPE_ON_BOOT,
     KEY_ZIGBEE,
@@ -148,6 +149,10 @@ CONFIG_SCHEMA = cv.All(
                     min=cv.TimePeriodMilliseconds(milliseconds=200),
                     max=cv.TimePeriodMinutes(minutes=60),  # 1 hour
                 ),
+            ),
+            cv.Optional(CONF_TCLK_EXCHANGE_REQUIRED): cv.All(
+                cv.requires_component(ESP32_DOMAIN),
+                cv.boolean,
             ),
         }
     ).extend(cv.COMPONENT_SCHEMA),

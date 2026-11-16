@@ -455,6 +455,9 @@ void ZigbeeComponent::setup() {
 #endif
 
   ezb_aps_secur_enable_distributed_security(false);
+  if (!this->tclk_exchange_required_ && ezb_secur_set_tclk_exchange_required(false) != EZB_ERR_NONE) {
+    ESP_LOGW(TAG, "Could not disable TC link key exchange");
+  }
   ezb_nwk_set_min_join_lqi(32);
   if (ezb_app_signal_add_handler(ZigbeeComponent::app_signal_handler) != ESP_OK) {
     ESP_LOGE(TAG, "Could not set application signal handler");
