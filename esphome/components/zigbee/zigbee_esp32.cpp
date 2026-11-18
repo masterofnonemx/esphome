@@ -157,6 +157,14 @@ bool ZigbeeComponent::app_signal_handler(const ezb_app_signal_t *app_signal) {
         ESP_LOGD(TAG, "Zigbee APP Signal NETWORK_STATUS: 0x%02x", network_status_params->status);
       }
     } break;
+    case EZB_ZDO_SIGNAL_DEVICE_ANNCE: {
+      const ezb_zdo_signal_device_annce_params_t *annce =
+          (const ezb_zdo_signal_device_annce_params_t *) ezb_app_signal_get_params(app_signal);
+      ESP_LOGI(TAG, "Device announce: short 0x%04X, IEEE %02X:%02X:%02X:%02X:%02X:%02X:%02X:%02X, capability 0x%02X",
+               annce->short_addr, annce->device_addr.u8[7], annce->device_addr.u8[6], annce->device_addr.u8[5],
+               annce->device_addr.u8[4], annce->device_addr.u8[3], annce->device_addr.u8[2],
+               annce->device_addr.u8[1], annce->device_addr.u8[0], annce->capability);
+    } break;
     default:
       ESP_LOGD(TAG, "Zigbee APP Signal: %s(type: 0x%02x)", ezb_app_signal_to_string(signal_type), signal_type);
       break;
