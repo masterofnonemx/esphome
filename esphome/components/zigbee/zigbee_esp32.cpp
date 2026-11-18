@@ -154,7 +154,9 @@ bool ZigbeeComponent::app_signal_handler(const ezb_app_signal_t *app_signal) {
           global_zigbee->on_parent_link_failure_();
         }
       } else {
-        ESP_LOGD(TAG, "Zigbee APP Signal NETWORK_STATUS: 0x%02x", network_status_params->status);
+        ESP_LOGD(TAG, "Zigbee APP Signal NETWORK_STATUS: %s (0x%02x), address 0x%04X",
+        ezb_nwk_network_status_to_string((ezb_nwk_network_status_t) network_status_params->status),
+        network_status_params->status, network_status_params->network_addr);
       }
     } break;
     case EZB_ZDO_SIGNAL_DEVICE_ANNCE: {
