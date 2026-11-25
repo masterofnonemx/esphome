@@ -484,7 +484,7 @@ void ZigbeeComponent::setup() {
   ezb_af_set_node_power_desc(&desc);
 
   // Start the Zigbee task with priority 1 to ensure main loop can still run even if Zigbee is busy
-  xTaskCreate(ezb_task, "Zigbee_main", 4096, NULL, 1, NULL);
+  xTaskCreate(ezb_task, "Zigbee_main", 8192, NULL, 1, NULL);
   this->disable_loop();  // loop is only needed for processing events, so disable until we join a network
 }
 
